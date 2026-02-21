@@ -12,7 +12,6 @@
     <nav>
       <button class="tab-button active" data-tab="grupy">Grupy</button>
       <button class="tab-button" data-tab="harmonogram">Harmonogram</button>
-      <button class="tab-button" data-tab="tabela">Tabela</button>
       <button class="tab-button" data-tab="playoff">Playoff</button>
     </nav>
   </header>
@@ -22,60 +21,18 @@
     <section id="grupy" class="tab-content active">
       <div class="group">
         <h2>Grupa A</h2>
-        <ul id="groupA">
-          <li>Cadovia</li>
-          <li>OSP Niedośpielin</li>
-          <li>Niedośpielin</li>
-          <li>Rogi</li>
-          <li>Fc Żubry</li>
-        </ul>
+        <table class="group-table" id="groupA"></table>
       </div>
       <div class="group">
         <h2>Grupa B</h2>
-        <ul id="groupB">
-          <li>OSP Karczów</li>
-          <li>Kruszyna</li>
-          <li>Laga United</li>
-          <li>Arka</li>
-        </ul>
+        <table class="group-table" id="groupB"></table>
       </div>
     </section>
 
     <!-- HARMONOGRAM -->
     <section id="harmonogram" class="tab-content">
       <h2>Harmonogram</h2>
-      <table id="schedule">
-        <thead>
-          <tr>
-            <th>Mecz</th>
-            <th>Wynik</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- mecze wypełniane przez JS -->
-        </tbody>
-      </table>
-    </section>
-
-    <!-- TABELA -->
-    <section id="tabela" class="tab-content">
-      <h2>Tabela Grupowa</h2>
-      <table id="standings">
-        <thead>
-          <tr>
-            <th>Grupa</th>
-            <th>Zespół</th>
-            <th>M</th>
-            <th>Z</th>
-            <th>P</th>
-            <th>Br</th>
-            <th>Pkt</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- wypełniane JS -->
-        </tbody>
-      </table>
+      <table id="schedule"></table>
     </section>
 
     <!-- PLAYOFF -->
@@ -85,11 +42,11 @@
         <tbody>
           <tr>
             <td>Półfinał 1</td>
-            <td id="semi1">1A vs 2B</td>
+            <td id="semi1">-</td>
           </tr>
           <tr>
             <td>Półfinał 2</td>
-            <td id="semi2">1B vs 2A</td>
+            <td id="semi2">-</td>
           </tr>
           <tr>
             <td>Finał</td>
