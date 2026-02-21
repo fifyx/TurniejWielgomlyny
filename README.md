@@ -1,1 +1,1 @@
-# MagikART
+# TurniejWielgomłyny
