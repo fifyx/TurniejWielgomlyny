@@ -1,46 +1,75 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Turniej Piłkarski</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turniej Piłki Nożnej</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>Turniej Piłkarski</header>
+<header>Turniej Piłki Nożnej</header>
 
-<div class="tabs">
-  <div class="tab active" data-tab="table">Tabela</div>
-  <div class="tab" data-tab="schedule">Harmonogram</div>
-  <div class="tab" data-tab="playoffs">Play Offy</div>
-</div>
+<nav>
+    <button class="tab-btn active" data-tab="table">Tabela</button>
+    <button class="tab-btn" data-tab="schedule">Harmonogram</button>
+    <button class="tab-btn" data-tab="playoff">Play Off</button>
+</nav>
 
-<div id="table" class="section active">
-  <div class="card">
-    <h2>Grupa A</h2>
-    <table id="groupA"></table>
-  </div>
+<main>
+    <div id="table" class="tab-content">
+        <h3>Grupa A</h3>
+        <table id="groupA">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Drużyna</th>
+                    <th>M</th>
+                    <th>B</th>
+                    <th>P</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
-  <div class="card">
-    <h2>Grupa B</h2>
-    <table id="groupB"></table>
-  </div>
-</div>
+        <h3>Grupa B</h3>
+        <table id="groupB">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Drużyna</th>
+                    <th>M</th>
+                    <th>B</th>
+                    <th>P</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
-<div id="schedule" class="section">
-  <div class="card">
-    <h2>Mecze</h2>
-    <div id="matches"></div>
-  </div>
-</div>
+    <div id="schedule" class="tab-content hidden">
+        <div id="matches"></div>
+    </div>
 
-<div id="playoffs" class="section">
-  <div class="card">
-    <h2>Play Offy</h2>
-    <p>Tu pojawi się drabinka.</p>
-  </div>
-</div>
+    <div id="playoff" class="tab-content hidden">
+        <div class="playoff">
+            <div class="playoff-box">
+                <div class="playoff-title">Półfinał 1</div>
+                <div id="semi1"></div>
+            </div>
+
+            <div class="playoff-box">
+                <div class="playoff-title">Półfinał 2</div>
+                <div id="semi2"></div>
+            </div>
+
+            <div class="playoff-box final">
+                <div class="playoff-title">Finał</div>
+                <div id="final"></div>
+            </div>
+        </div>
+    </div>
+</main>
 
 <script src="script.js"></script>
 </body>
