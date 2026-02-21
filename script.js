@@ -1,162 +1,113 @@
-// Tab switching
-const tabButtons = document.querySelectorAll(".tab-button");
-const tabContents = document.querySelectorAll(".tab-content");
-
-tabButtons.forEach(btn => {
-  btn.addEventListener("click", () => {
-    tabButtons.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    tabContents.forEach(c => c.classList.remove("active"));
-    document.getElementById(btn.dataset.tab).classList.add("active");
-  });
-});
-
-// Drużyny
-const groups = {
-  A: ["Cadovia","OSP Niedośpielin","Niedośpielin","Rogi","Fc Żubry"],
-  B: ["OSP Karczów","Kruszyna","Laga United","Arka"]
-};
-
-// Mecze: [Grupa, teamIndex1, teamIndex2]
-const matches = [
-  ["A",0,1],
-  ["B",0,3],
-  ["A",2,3],
-  ["B",1,2],
-  ["A",0,2],
-  ["B",0,2],
-  ["A",1,4],
-  ["B",3,1],
-  ["A",0,3],
-  ["B",0,1],
-  ["A",3,4],
-  ["B",2,3],
-  ["A",1,2],
-  ["A",0,4],
-  ["A",1,3],
-  ["A",2,4]
+const groupA = [
+  {name: "Drużyna A1"},
+  {name: "Drużyna A2"},
+  {name: "Drużyna A3"},
+  {name: "Drużyna A4"}
 ];
 
-// Statystyki
-let standings = {A:[], B:[]};
-groups.A.forEach(t=>standings.A.push({name:t,M:0,GF:0,GA:0,Bil:0,Pkt:0}));
-groups.B.forEach(t=>standings.B.push({name:t,M:0,GF:0,GA:0,Bil:0,Pkt:0}));
+const groupB = [
+  {name: "Drużyna B1"},
+  {name: "Drużyna B2"},
+  {name: "Drużyna B3"},
+  {name: "Drużyna B4"}
+];
 
-// Render tabel grup
-function renderTables(){
-  ["A","B"].forEach(g=>{
-    const tbody = document.createElement("tbody");
-    standings[g].forEach(t=>{
-      const tr = document.createElement("tr");
-      tr.innerHTML = `<td>${t.name}</td><td>${t.M}</td><td>${t.GF}</td><td>${t.GA}</td><td>${t.Bil}</td><td>${t.Pkt}</td>`;
-      tbody.appendChild(tr);
-    });
-    const table = document.getElementById("group"+g);
-    table.innerHTML = `<thead><tr><th>Zespół</th><th>M</th><th>GF</th><th>GA</th><th>Bil</th><th>Pkt</th></tr></thead>`;
-    table.appendChild(tbody);
-  });
+function resetStats(team){
+  team.M = 0;
+  team.GF = 0;
+  team.GA = 0;
+  team.P = 0;
 }
 
-// Render harmonogram z przyciskiem zatwierdz/zmień wynik
-function renderSchedule(){
-  const scheduleTable = document.getElementById("schedule");
-  scheduleTable.innerHTML = `<thead><tr><th>Mecz</th><th>Wynik</th></tr></thead><tbody></tbody>`;
-  const tbody = scheduleTable.querySelector("tbody");
+[groupA, groupB].forEach(group => group.forEach(resetStats));
+
+const matches = [
+  {group: "A", home: "Drużyna A1", away: "Drużyna A2"},
+  {group: "A", home: "Drużyna A3", away: "Drużyna A4"},
+  {group: "B", home: "Drużyna B1", away: "Drużyna B2"},
+  {group: "B", home: "Drużyna B3", away: "Drużyna B4"},
+];
+
+document.querySelectorAll(".tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+    tab.classList.add("active");
+    document.getElementById(tab.dataset.tab).classList.add("active");
+  });
+});
+
+function renderTable(group, elementId){
+  group.sort((a,b)=>{
+    if(b.P !== a.P) return b.P - a.P;
+    return (b.GF - b.GA) - (a.GF - a.GA);
+  });
+
+  let html = `
+    <tr>
+      <th>#</th><th>Drużyna</th><th>M</th><th>B</th><th>P</th>
+    </tr>
+  `;
+
+  group.forEach((t,i)=>{
+    html += `
+      <tr>
+        <td>${i+1}</td>
+        <td>${t.name}</td>
+        <td>${t.M}</td>
+        <td>${t.GF}:${t.GA}</td>
+        <td>${t.P}</td>
+      </tr>
+    `;
+  });
+
+  document.getElementById(elementId).innerHTML = html;
+}
+
+function renderMatches(){
+  const container = document.getElementById("matches");
+  container.innerHTML = "";
 
   matches.forEach((m,i)=>{
-    const tr = document.createElement("tr");
-    const team1 = groups[m[0]][m[1]];
-    const team2 = groups[m[0]][m[2]];
-    tr.innerHTML = `
-      <td>${team1} vs ${team2}</td>
-      <td>
-        <input type="number" class="score-input" min="0" data-group="${m[0]}" data-match="${i}" data-team="0"> -
-        <input type="number" class="score-input" min="0" data-group="${m[0]}" data-match="${i}" data-team="1">
-        <button class="score-btn" data-match="${i}">Zatwierdź wynik</button>
-      </td>
+    container.innerHTML += `
+      <div class="match">
+        <span>${m.home}</span>
+        <input type="number" id="h${i}">
+        :
+        <input type="number" id="a${i}">
+        <span>${m.away}</span>
+        <button onclick="submitMatch(${i})">OK</button>
+      </div>
     `;
-    tbody.appendChild(tr);
   });
 }
 
-// Aktualizacja statystyk
-function updateStandings(){
-  ["A","B"].forEach(g=>{
-    standings[g].forEach(t=>Object.assign(t,{M:0,GF:0,GA:0,Bil:0,Pkt:0}));
-  });
+function submitMatch(index){
+  const match = matches[index];
+  const h = parseInt(document.getElementById("h"+index).value);
+  const a = parseInt(document.getElementById("a"+index).value);
 
-  document.querySelectorAll(".score-input").forEach(input=>{
-    const group = input.dataset.group;
-    const matchIndex = input.dataset.match;
-    const match = matches[matchIndex];
-    const score0 = parseInt(document.querySelector(`input[data-group="${group}"][data-match="${matchIndex}"][data-team="0"]`).value) || null;
-    const score1 = parseInt(document.querySelector(`input[data-group="${group}"][data-match="${matchIndex}"][data-team="1"]`).value) || null;
+  if(isNaN(h) || isNaN(a)) return;
 
-    if(score0 !== null && score1 !== null){
-      const t0 = standings[group][match[1]];
-      const t1 = standings[group][match[2]];
+  const group = match.group === "A" ? groupA : groupB;
+  const home = group.find(t=>t.name === match.home);
+  const away = group.find(t=>t.name === match.away);
 
-      t0.M++; t1.M++;
-      t0.GF += score0; t0.GA += score1;
-      t1.GF += score1; t1.GA += score0;
-      t0.Bil = t0.GF - t0.GA;
-      t1.Bil = t1.GF - t1.GA;
+  home.M++; away.M++;
+  home.GF += h; home.GA += a;
+  away.GF += a; away.GA += h;
 
-      if(score0 > score1){ t0.Pkt+=3; }
-      else if(score0 < score1){ t1.Pkt+=3; }
-      else{ t0.Pkt++; t1.Pkt++; }
-    }
-  });
+  if(h>a) home.P+=3;
+  else if(h<a) away.P+=3;
+  else { home.P+=1; away.P+=1; }
 
-  renderTables();
-  updatePlayoff();
+  renderAll();
 }
 
-// Playoff – tylko jeśli miejsca pewne
-function updatePlayoff(){
-  ["A","B"].forEach(g=>standings[g].sort((a,b)=>b.Pkt - a.Pkt || (b.Bil - a.Bil)));
-  const a = standings.A;
-  const b = standings.B;
-
-  const a1Cert = a[0].Pkt - a[1].Pkt >= 0 && a[0].Pkt - (a[2]?.Pkt||0) >= 0;
-  const a2Cert = a[1].Pkt - (a[2]?.Pkt||0) > 0;
-  const b1Cert = b[0].Pkt - b[1].Pkt >= 0 && b[0].Pkt - (b[2]?.Pkt||0) >= 0;
-  const b2Cert = b[1].Pkt - (b[2]?.Pkt||0) > 0;
-
-  document.getElementById("semi1").innerText = (a1Cert && b2Cert) ? `${a[0].name} vs ${b[1].name}` : "-";
-  document.getElementById("semi2").innerText = (b1Cert && a2Cert) ? `${b[0].name} vs ${a[1].name}` : "-";
-  document.getElementById("final").innerText = "-";
+function renderAll(){
+  renderTable(groupA, "groupA");
+  renderTable(groupB, "groupB");
 }
 
-// Obsługa przycisku zatwierdź/zmień wynik
-document.addEventListener("click", e=>{
-  if(e.target.classList.contains("score-btn")){
-    const btn = e.target;
-    const matchIndex = btn.dataset.match;
-    const inputs = document.querySelectorAll(`.score-input[data-match="${matchIndex}"]`);
-    const locked = btn.dataset.locked === "true";
-
-    if(!locked){
-      // zatwierdź
-      inputs.forEach(inp=>inp.disabled = true);
-      btn.innerText = "Zmień wynik";
-      btn.dataset.locked = "true";
-    } else {
-      // zmień wynik
-      inputs.forEach(inp=>inp.disabled = false);
-      btn.innerText = "Zatwierdź wynik";
-      btn.dataset.locked = "false";
-    }
-    updateStandings();
-  }
-});
-
-// Event listener dla inputów (dynamiczna aktualizacja przed zatwierdzeniem)
-document.addEventListener("input", e=>{
-  if(e.target.classList.contains("score-input")) updateStandings();
-});
-
-// Inicjalizacja
-renderSchedule();
-renderTables();
+renderAll();
+renderMatches();
