@@ -1,0 +1,101 @@
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #f9f9f9;
+  color: #333;
+}
+
+header {
+  background: #0077b6;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+nav {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+nav button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background: #023e8a;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+nav button.active {
+  background: #00b4d8;
+}
+
+nav button:hover {
+  background: #0077b6;
+}
+
+main {
+  padding: 1rem;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.group {
+  margin-bottom: 1rem;
+}
+
+.group h2 {
+  margin-bottom: 0.5rem;
+  color: #0077b6;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+table, th, td {
+  border: 1px solid #ddd;
+}
+
+th, td {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+input.score-input {
+  width: 40px;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+  }
+}
