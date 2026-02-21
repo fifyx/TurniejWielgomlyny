@@ -1,101 +1,115 @@
-/* Reset */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+:root {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --accent: #2563eb;
+  --text: #f1f5f9;
+  --gray: #94a3b8;
 }
 
 body {
-  background: #f9f9f9;
-  color: #333;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
 
 header {
-  background: #0077b6;
-  color: white;
-  padding: 1rem;
   text-align: center;
+  padding: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  background: #111827;
 }
 
-nav {
-  margin-top: 1rem;
+.tabs {
   display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
+  background: #1e293b;
 }
 
-nav button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  background: #023e8a;
-  color: white;
+.tab {
+  flex: 1;
+  padding: 12px;
+  text-align: center;
   cursor: pointer;
-  transition: background 0.3s;
+  color: var(--gray);
+  transition: 0.2s;
 }
 
-nav button.active {
-  background: #00b4d8;
+.tab.active {
+  background: var(--accent);
+  color: white;
+  font-weight: bold;
 }
 
-nav button:hover {
-  background: #0077b6;
-}
-
-main {
-  padding: 1rem;
-}
-
-.tab-content {
+.section {
   display: none;
+  padding: 15px;
 }
 
-.tab-content.active {
+.section.active {
   display: block;
 }
 
-.group {
-  margin-bottom: 1rem;
-}
-
-.group h2 {
-  margin-bottom: 0.5rem;
-  color: #0077b6;
-}
-
-ul {
-  list-style: none;
-}
-
-ul li {
-  padding: 0.3rem 0;
-  border-bottom: 1px solid #ddd;
+.card {
+  background: var(--card);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-table, th, td {
-  border: 1px solid #ddd;
+  font-size: 14px;
 }
 
 th, td {
-  padding: 0.5rem;
+  padding: 8px;
   text-align: center;
 }
 
-input.score-input {
+th {
+  background: #334155;
+}
+
+tr:nth-child(even) {
+  background: #1e293b;
+}
+
+button {
+  background: var(--accent);
+  border: none;
+  padding: 6px 10px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+input {
   width: 40px;
+  padding: 4px;
+  text-align: center;
+  background: #334155;
+  border: none;
+  color: white;
+  border-radius: 6px;
+}
+
+.match {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 6px;
+}
+
+.match span {
+  flex: 1;
   text-align: center;
 }
 
 @media (max-width: 600px) {
-  nav {
-    flex-direction: column;
+  table {
+    font-size: 12px;
   }
 }
