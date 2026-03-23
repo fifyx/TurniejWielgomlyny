@@ -1,76 +1,23 @@
 <!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turniej Piłki Nożnej</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<header>Turniej Piłki Nożnej</header>
-
-<nav>
-    <button class="tab-btn active" data-tab="table">Tabela</button>
-    <button class="tab-btn" data-tab="schedule">Harmonogram</button>
-    <button class="tab-btn" data-tab="playoff">Play Off</button>
-</nav>
-
-<main>
-    <div id="table" class="tab-content">
-        <h3>Grupa A</h3>
-        <table id="groupA">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Drużyna</th>
-                    <th>M</th>
-                    <th>B</th>
-                    <th>P</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-
-        <h3>Grupa B</h3>
-        <table id="groupB">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Drużyna</th>
-                    <th>M</th>
-                    <th>B</th>
-                    <th>P</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-
-    <div id="schedule" class="tab-content hidden">
-        <div id="matches"></div>
-    </div>
-
-    <div id="playoff" class="tab-content hidden">
-        <div class="playoff">
-            <div class="playoff-box">
-                <div class="playoff-title">Półfinał 1</div>
-                <div id="semi1"></div>
-            </div>
-
-            <div class="playoff-box">
-                <div class="playoff-title">Półfinał 2</div>
-                <div id="semi2"></div>
-            </div>
-
-            <div class="playoff-box final">
-                <div class="playoff-title">Finał</div>
-                <div id="final"></div>
-            </div>
-        </div>
-    </div>
-</main>
-
-<script src="script.js"></script>
-</body>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>Section</title>
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Main page wrapper containing the full-page section background -->
+    <main class="box">
+      <!-- Full-page decorative section rendered as an accessible image -->
+      <img
+        class="section"
+        src="img/section-1.svg"
+        alt="Section background illustration"
+        role="img"
+        aria-label="Decorative section background"
+      />
+    </main>
+  </body>
 </html>
